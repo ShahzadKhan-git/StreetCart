@@ -1,6 +1,7 @@
 import CategoryCard from "@/components/CategoryCard";
 import { Store, Shirt, MapPin, Check } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -73,9 +74,9 @@ export default function Home() {
 
           {/* Right: CTA Button */}
           <div className="w-full md:w-auto mt-4 md:mt-0">
-            <button className="w-full md:w-auto bg-gradient-to-r from-[#508D69] to-[#2E5E4E] hover:opacity-90 text-white font-medium py-3 px-12 rounded shadow transition-all text-lg">
+            <Link href="/auth" className="inline-block w-full md:w-auto bg-gradient-to-r from-[#508D69] to-[#2E5E4E] hover:opacity-90 text-white font-medium py-3 px-12 rounded shadow transition-all text-lg text-center">
               Login / Register
-            </button>
+            </Link>
           </div>
         </div>
       </section>

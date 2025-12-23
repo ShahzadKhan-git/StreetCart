@@ -24,9 +24,9 @@ export default function Navbar() {
                     <Link href="#" className="hover:text-white hover:underline underline-offset-4 transition-all">Features</Link>
                     <Link href="#" className="hover:text-white hover:underline underline-offset-4 transition-all">Service</Link>
                 </div>
-                <button className="px-6 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg hover:bg-green-500 shadow-md hover:shadow-green-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                <Link href="/auth" className="px-6 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg hover:bg-green-500 shadow-md hover:shadow-green-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
                     Login / Register
-                </button>
+                </Link>
             </div>
         </nav>
     );
