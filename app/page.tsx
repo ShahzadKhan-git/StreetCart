@@ -1,83 +1,65 @@
-import CategoryCard from "@/components/CategoryCard";
-import { Store, Shirt, MapPin, Check } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import HeroSlider from "@/components/home/HeroSlider";
+import HomeCategoryGrid from "@/components/home/HomeCategoryGrid";
+import ClothingCard from "@/components/ClothingCard";
+
+// Mock data for Latest Arrivals (Reusing generic clothing card for now to fill space at bottom)
+const LATEST_ARRIVALS = [
+  {
+    id: 1,
+    title: "Casual Denim Shirt",
+    price: "₹1,299",
+    store: "Denim Hub",
+    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop&q=60"
+  },
+  {
+    id: 2,
+    title: "Basic White Tee",
+    price: "₹499",
+    store: "Essentials",
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&auto=format&fit=crop&q=60"
+  },
+  {
+    id: 3,
+    title: "Summer floral Dress",
+    price: "₹2,499",
+    store: "Vogue",
+    image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=60"
+  },
+  {
+    id: 4,
+    title: "Urban Hoodie",
+    price: "₹1,899",
+    store: "Street Style",
+    image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format&fit=crop&q=60"
+  }
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center w-full bg-gradient-to-b from-gray-50 to-white min-h-screen">
-      {/* 2. Hero Section */}
-      <section className="w-full py-20 px-6 flex flex-col items-center text-center max-w-7xl mx-auto">
-        {/* Centered Logo */}
-        <div className="mb-8 relative w-[280px] h-[100px] md:w-[320px] md:h-[120px] transition-all duration-500 hover:scale-105">
-          <Image
-            src="/logo.png"
-            alt="StreetCart"
-            fill
-            className="object-contain"
-            priority
-          />
+    <div className="min-h-screen bg-white">
+      {/* 1. Hero Slider */}
+      <HeroSlider />
+
+      {/* 2. Popular Categories */}
+      <HomeCategoryGrid />
+
+      {/* 3. Latest Arrivals (Bonus Section to match reference vibe) */}
+      <section className="py-20 px-6 max-w-[1440px] mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">Latest Arrivals</h2>
+          <div className="w-24 h-1 bg-gray-200 mx-auto rounded-full"></div>
         </div>
 
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
-          Your Nearby Stores, <span className="text-green-600">Online</span>
-        </h1>
-
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-10 leading-relaxed font-medium">
-          Shop groceries and clothing from trusted local vendors around you with fast delivery and better pricing.
-        </p>
-
-        <button className="flex items-center gap-3 bg-white border border-gray-200 text-gray-900 font-semibold py-4 px-10 rounded-full shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-          <MapPin className="w-6 h-6 text-green-600 fill-green-600 group-hover:scale-110 transition-transform" />
-          <span className="text-lg">Enable Location</span>
-        </button>
-      </section>
-
-      {/* 3. Category Section */}
-      <section className="w-full max-w-5xl px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <CategoryCard
-            icon={<Store className="w-10 h-10" />}
-            title="Kirana & Groceries"
-            subtitle="Daily essentials near you"
-          />
-          <CategoryCard
-            icon={<Shirt className="w-10 h-10" />}
-            title="Clothing Stores"
-            subtitle="Fashion from local shops"
-          />
-        </div>
-      </section>
-
-      {/* 4. Why Choose Us Section */}
-      <section className="w-full max-w-5xl px-6 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          Why Choose Us?
-        </h2>
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
-          {/* Left: Checkmarks */}
-          <div className="flex flex-col gap-4">
-            {[
-              "Local vendors",
-              "Better pricing",
-              "Faster delivery",
-              "Support local businesses"
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="text-green-600">
-                  <Check className="w-5 h-5" />
-                </div>
-                <span className="text-lg text-gray-700">{item}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Right: CTA Button */}
-          <div className="w-full md:w-auto mt-4 md:mt-0">
-            <Link href="/auth" className="inline-block w-full md:w-auto bg-gradient-to-r from-[#508D69] to-[#2E5E4E] hover:opacity-90 text-white font-medium py-3 px-12 rounded shadow transition-all text-lg text-center">
-              Login / Register
-            </Link>
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {LATEST_ARRIVALS.map((item) => (
+            <ClothingCard
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              store={item.store}
+              image={item.image}
+            />
+          ))}
         </div>
       </section>
     </div>
