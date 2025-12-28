@@ -1,8 +1,14 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, ShoppingCart, User, Menu } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+    const pathname = usePathname();
+    const isMainPage = pathname === '/main';
+
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F3F4F6] border-b border-gray-200">
             <div className="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between gap-8">
@@ -17,9 +23,13 @@ export default function Navbar() {
                 {/* 2. Navigation Links (Center-Left) - Hidden on Mobile */}
                 <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
                     <Link href="/main" className="hover:text-black transition-colors font-bold text-green-700">Main Page</Link>
-                    <Link href="/men" className="hover:text-black transition-colors">Men</Link>
-                    <Link href="/women" className="hover:text-black transition-colors">Women</Link>
-                    <Link href="#" className="hover:text-black transition-colors">All Products</Link>
+                    {!isMainPage && (
+                        <>
+                            <Link href="/men" className="hover:text-black transition-colors">Men</Link>
+                            <Link href="/women" className="hover:text-black transition-colors">Women</Link>
+                            <Link href="#" className="hover:text-black transition-colors">All Products</Link>
+                        </>
+                    )}
                 </div>
 
                 {/* 3. Search Bar (Center) - Hidden on Mobile */}
