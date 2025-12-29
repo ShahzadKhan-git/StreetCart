@@ -23,6 +23,8 @@ export default function Navbar() {
                 {/* 2. Navigation Links (Center-Left) - Hidden on Mobile */}
                 <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
                     <Link href="/main" className="hover:text-black transition-colors font-bold text-green-700">Main Page</Link>
+                    <Link href="/kirana" className="hover:text-black transition-colors">Kirana Store</Link>
+                    <Link href="/" className="hover:text-black transition-colors">Clothing Store</Link>
                     {!isMainPage && (
                         <>
                             <Link href="/men" className="hover:text-black transition-colors">Men</Link>
