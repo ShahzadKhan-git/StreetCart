@@ -60,6 +60,7 @@ export default function MenPage() {
                     {MEN_CLOTHING.map((item) => (
                         <ClothingCard
                             key={item.id}
+                            id={item.id}
                             title={item.title}
                             price={item.price}
                             store={item.store}

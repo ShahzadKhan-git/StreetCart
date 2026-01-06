@@ -54,6 +54,7 @@ export default function Home() {
           {LATEST_ARRIVALS.map((item) => (
             <ClothingCard
               key={item.id}
+              id={item.id}
               title={item.title}
               price={item.price}
               store={item.store}

@@ -127,6 +127,7 @@ export default function KiranaPage() {
                     {PRODUCTS.map((product) => (
                         <ClothingCard
                             key={product.id}
+                            id={product.id}
                             image={product.image}
                             title={product.title}
                             price={product.price}
