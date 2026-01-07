@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, ShoppingCart, User, Menu } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu, Heart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 
 export default function Navbar() {
     const pathname = usePathname();
     const isMainPage = pathname === '/main';
-    const { cartCount } = useCart();
+    const { cartCount, wishlistCount } = useCart();
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F3F4F6] border-b border-gray-200">
@@ -55,6 +55,15 @@ export default function Navbar() {
 
                     <Link href="/auth" className="hidden sm:flex px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded hover:bg-black transition-colors">
                         Register
+                    </Link>
+
+                    <Link href="/favorites" className="relative group">
+                        <Heart className="w-6 h-6 text-gray-700 group-hover:text-red-500 transition-colors" />
+                        {wishlistCount > 0 && (
+                            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white transition-all">
+                                {wishlistCount}
+                            </span>
+                        )}
                     </Link>
 
                     <button className="relative group">

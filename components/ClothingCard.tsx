@@ -14,14 +14,21 @@ interface ClothingCardProps {
 }
 
 export default function ClothingCard({ id, image, title, price, store }: ClothingCardProps) {
-    const { addToCart } = useCart();
+    const { addToCart, toggleWishlist, isInWishlist } = useCart();
     const [isAdded, setIsAdded] = useState(false);
+
+    const isFavorited = isInWishlist(id);
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation(); // Prevent navigation if the card is a link
         addToCart({ id, image, title, price, store });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
+    };
+
+    const handleToggleWishlist = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        toggleWishlist({ id, image, title, price, store });
     };
 
     return (
@@ -36,26 +43,38 @@ export default function ClothingCard({ id, image, title, price, store }: Clothin
                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 />
 
-                {/* Wishlist Button (Always visible on hover) */}
+                {/* Wishlist Button (Top Right) */}
                 <button
-                    className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white text-gray-700 hover:text-red-500 transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-[-10px] group-hover:translate-y-0"
-                    onClick={(e) => { e.stopPropagation(); /* Wishlist logic here */ }}
+                    className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-[-10px] group-hover:translate-y-0 ${isFavorited ? 'bg-white text-red-500' : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:text-red-500 hover:bg-white'
+                        }`}
+                    onClick={handleToggleWishlist}
                 >
-                    <Heart className="w-5 h-5" />
+                    <Heart className={`w-5 h-5 ${isFavorited ? 'fill-current' : ''}`} />
                 </button>
 
-                {/* Myntra Style Add to Cart Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out bg-gradient-to-t from-black/60 to-transparent">
+                {/* Myntra Style Bottom Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out bg-gradient-to-t from-black/60 to-transparent flex gap-2">
+                    {/* Wishlist Button (Left of Add to Cart) */}
+                    <button
+                        onClick={handleToggleWishlist}
+                        className={`flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 font-bold text-[10px] transition-all duration-300 ${isFavorited ? 'bg-red-500 text-white' : 'bg-white text-gray-900 hover:bg-gray-100'
+                            }`}
+                    >
+                        <Heart className={`w-3.5 h-3.5 ${isFavorited ? 'fill-current' : ''}`} />
+                        {isFavorited ? 'SAVED' : 'WISHLIST'}
+                    </button>
+
+                    {/* Add to Cart Button */}
                     <button
                         onClick={handleAddToCart}
-                        className={`w-full py-2.5 rounded-lg flex items-center justify-center gap-2 font-bold text-sm transition-all duration-300 ${isAdded ? 'bg-green-500 text-white' : 'bg-white text-gray-900 hover:bg-green-600 hover:text-white'
+                        className={`flex-[2] py-2.5 rounded-lg flex items-center justify-center gap-2 font-bold text-[10px] transition-all duration-300 ${isAdded ? 'bg-green-500 text-white' : 'bg-white text-gray-900 hover:bg-green-600 hover:text-white'
                             }`}
                     >
                         {isAdded ? (
                             <>✓ ADDED</>
                         ) : (
                             <>
-                                <ShoppingCart className="w-4 h-4" />
+                                <ShoppingCart className="w-3.5 h-3.5" />
                                 ADD TO CART
                             </>
                         )}
