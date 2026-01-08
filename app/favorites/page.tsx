@@ -9,7 +9,7 @@ export default function FavoritesPage() {
     const { wishlistItems, wishlistCount } = useCart();
 
     return (
-        <div className="min-h-screen bg-white pt-24 pb-20">
+        <div className="min-h-screen bg-white pt-24 pb-20 animate-fade-in-up">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header */}
                 <div className="mb-12">

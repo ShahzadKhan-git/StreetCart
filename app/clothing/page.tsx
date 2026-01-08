@@ -119,11 +119,11 @@ export default function ClothingPage() {
             <FilterBar />
 
             {/* 3. Product Grid */}
-            <main className="max-w-7xl mx-auto px-6 pb-24">
+            <main className="max-w-7xl mx-auto px-6 pb-24 animate-fade-in-up animation-delay-200">
                 <h2 className="sr-only">Clothing Products</h2>
 
                 {/* Grid Layout: 2 cols mobile, 3 tablet, 4 desktop */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16">
                     {PRODUCTS.map((product) => (
                         <ClothingCard
                             key={product.id}

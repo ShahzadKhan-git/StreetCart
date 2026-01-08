@@ -47,16 +47,17 @@ const WOMEN_CLOTHING = [
 
 export default function WomenPage() {
     return (
-        <div className="min-h-screen bg-white pt-20"> {/* pt-20 to account for fixed navbar */}
-            <div className="max-w-[1440px] mx-auto px-6 py-10">
-                <div className="mb-12">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">Women's Collection</h1>
-                    <p className="text-gray-600 max-w-2xl">
-                        Discover the latest trends in women's fashion. Designed for elegance, comfort, and confidence for every occasion.
+        <div className="min-h-screen bg-white pt-24 pb-20 animate-fade-in-up"> {/* pt-24 for glass navbar */}
+            <div className="max-w-[1440px] mx-auto px-6">
+                <div className="mb-16">
+                    <span className="text-[10px] font-black text-green-600 uppercase tracking-[0.3em] mb-4 block">Trending Now</span>
+                    <h1 className="text-5xl md:text-7xl font-black text-gray-950 tracking-tighter italic mb-6">Women's Collection</h1>
+                    <p className="text-gray-500 font-medium max-w-2xl leading-relaxed">
+                        Discover the latest trends in women's fashion. Designed for statement elegance, uncompromising comfort, and effortless confidence for every unique occasion.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16">
                     {WOMEN_CLOTHING.map((item) => (
                         <ClothingCard
                             key={item.id}

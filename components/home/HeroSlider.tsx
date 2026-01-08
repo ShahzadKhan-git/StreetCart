@@ -45,67 +45,79 @@ export default function HeroSlider() {
     const prevSlide = () => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
 
     return (
-        <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-gray-100 mt-20">
+        <div className="relative w-full h-[600px] md:h-[800px] overflow-hidden bg-gray-900 mt-20">
             {SLIDES.map((slide, index) => (
                 <div
                     key={slide.id}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === current ? "opacity-100 z-10" : "opacity-0 z-0"
+                    className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === current ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
                         }`}
                 >
-                    {/* Background Image */}
+                    {/* Background Image with Zoom Effect */}
                     <div
-                        className="absolute inset-0 bg-cover bg-center"
+                        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[10000ms] ${index === current ? 'scale-110' : 'scale-100'}`}
                         style={{ backgroundImage: `url(${slide.image})` }}
                     >
-                        <div className="absolute inset-0 bg-black/30 md:bg-black/20" /> {/* Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent md:from-black/70" />
                     </div>
 
                     {/* Content Overlay */}
                     <div className="absolute inset-0 flex items-center">
                         <div className="max-w-[1440px] mx-auto px-6 w-full">
-                            <div className="max-w-2xl text-white">
-                                <span className="inline-block text-sm md:text-base font-medium tracking-[0.2em] mb-4 uppercase text-gray-200">
-                                    New Collection
+                            <div className={`max-w-2xl text-white transition-all duration-1000 delay-300 ${index === current ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-black tracking-[0.3em] mb-6 uppercase text-gray-100">
+                                    <span className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
+                                    Exclusive Arrivals
                                 </span>
-                                <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-none">
+                                <h2 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9] drop-shadow-2xl">
                                     {slide.title}
                                 </h2>
-                                <p className="text-base md:text-lg text-gray-100 mb-10 max-w-lg font-light tracking-wide leading-relaxed">
+                                <p className="text-lg md:text-xl text-gray-200 mb-12 max-w-lg font-medium tracking-tight leading-relaxed opacity-90">
                                     {slide.subtitle}
                                 </p>
-                                <Link
-                                    href={slide.link}
-                                    className="inline-block bg-white text-gray-900 border border-white hover:bg-transparent hover:text-white px-10 py-4 font-semibold text-sm uppercase tracking-widest transition-all duration-300"
-                                >
-                                    {slide.cta}
-                                </Link>
+                                <div className="flex items-center gap-6">
+                                    <Link
+                                        href={slide.link}
+                                        className="group relative overflow-hidden bg-white text-gray-950 px-12 py-5 font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] rounded-full"
+                                    >
+                                        <span className="relative z-10">{slide.cta}</span>
+                                        <div className="absolute inset-0 bg-green-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                                    </Link>
+                                    <button className="hidden md:flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest hover:text-green-400 transition-colors">
+                                        Watch Film
+                                        <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group hover:border-green-400">
+                                            <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-current border-b-[5px] border-b-transparent ml-1" />
+                                        </div>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             ))}
 
-            {/* Navigation Arrows */}
-            <button
-                onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm transition-all"
-            >
-                <ChevronLeft className="w-8 h-8" />
-            </button>
-            <button
-                onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm transition-all"
-            >
-                <ChevronRight className="w-8 h-8" />
-            </button>
+            {/* Navigation Arrows - Minimalist Glass */}
+            <div className="absolute bottom-12 right-12 z-20 flex gap-4">
+                <button
+                    onClick={prevSlide}
+                    className="p-4 rounded-full bg-white/10 hover:bg-white text-white hover:text-black backdrop-blur-md border border-white/10 transition-all duration-300"
+                >
+                    <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className="p-4 rounded-full bg-white text-black hover:bg-green-500 hover:text-white transition-all duration-300"
+                >
+                    <ChevronRight className="w-6 h-6" />
+                </button>
+            </div>
 
-            {/* Pagination Dots */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+            {/* Pagination Dots - Modern Linear */}
+            <div className="absolute bottom-12 left-6 z-20 flex gap-3">
                 {SLIDES.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrent(index)}
-                        className={`w-3 h-3 rounded-full transition-all ${index === current ? "bg-white scale-110" : "bg-white/50 hover:bg-white/80"
+                        className={`h-1.5 transition-all duration-500 rounded-full ${index === current ? "w-12 bg-white" : "w-4 bg-white/30 hover:bg-white/50"
                             }`}
                     />
                 ))}
