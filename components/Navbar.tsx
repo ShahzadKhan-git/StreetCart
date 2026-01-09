@@ -8,7 +8,8 @@ import { useCart } from '@/context/CartContext';
 
 export default function Navbar() {
     const pathname = usePathname();
-    const isMainPage = pathname === '/main';
+    const isMainPage = pathname === '/' || pathname === '/main';
+    const isFashionPage = pathname === '/fashion' || pathname === '/clothing' || pathname === '/men' || pathname === '/women';
     const { cartCount, wishlistCount } = useCart();
 
     return (
@@ -24,13 +25,14 @@ export default function Navbar() {
 
                 {/* 2. Navigation Links (Center-Left) - Hidden on Mobile */}
                 <div className="hidden lg:flex items-center gap-8 text-[13px] font-bold uppercase tracking-widest text-gray-500">
-                    <Link href="/main" className="hover:text-black transition-colors text-green-700">Main Page</Link>
-                    <Link href="/kirana" className="hover:text-black transition-colors">Kirana</Link>
-                    <Link href="/clothing" className="hover:text-black transition-colors">Clothing</Link>
-                    {!isMainPage && (
+                    <Link href="/" className={`hover:text-black transition-colors ${pathname === '/' ? 'text-green-700' : ''}`}>Main Page</Link>
+                    <Link href="/kirana" className={`hover:text-black transition-colors ${pathname === '/kirana' ? 'text-green-700' : ''}`}>Kirana</Link>
+                    <Link href="/clothing" className={`hover:text-black transition-colors ${pathname === '/clothing' ? 'text-green-700' : ''}`}>Clothing</Link>
+                    <Link href="/fashion" className={`hover:text-black transition-colors ${pathname === '/fashion' ? 'text-green-700' : ''}`}>Fashion</Link>
+                    {isFashionPage && (
                         <>
-                            <Link href="/men" className="hover:text-black transition-colors">Men</Link>
-                            <Link href="/women" className="hover:text-black transition-colors">Women</Link>
+                            <Link href="/men" className={`hover:text-black transition-colors ${pathname === '/men' ? 'text-green-700' : ''}`}>Men</Link>
+                            <Link href="/women" className={`hover:text-black transition-colors ${pathname === '/women' ? 'text-green-700' : ''}`}>Women</Link>
                         </>
                     )}
                 </div>
