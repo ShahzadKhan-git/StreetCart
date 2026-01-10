@@ -16,7 +16,10 @@ interface CartContextType {
     cartCount: number;
     addToCart: (item: Omit<CartItem, 'quantity'>) => void;
     removeFromCart: (id: number | string) => void;
+    updateQuantity: (id: number | string, change: number) => void;
     clearCart: () => void;
+    isCartOpen: boolean;
+    setIsCartOpen: (isOpen: boolean) => void;
     // Wishlist
     wishlistItems: Omit<CartItem, 'quantity'>[];
     wishlistCount: number;
@@ -29,6 +32,44 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [wishlistItems, setWishlistItems] = useState<Omit<CartItem, 'quantity'>[]>([]);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
+
+    // Persistence: Load from localStorage on mount
+    useEffect(() => {
+        const savedCart = localStorage.getItem('streetcart-cart');
+        const savedWishlist = localStorage.getItem('streetcart-wishlist');
+
+        if (savedCart) {
+            try {
+                setCartItems(JSON.parse(savedCart));
+            } catch (e) {
+                console.error("Failed to parse cart from localStorage", e);
+            }
+        }
+
+        if (savedWishlist) {
+            try {
+                setWishlistItems(JSON.parse(savedWishlist));
+            } catch (e) {
+                console.error("Failed to parse wishlist from localStorage", e);
+            }
+        }
+        setIsInitialized(true);
+    }, []);
+
+    // Persistence: Save to localStorage when items change
+    useEffect(() => {
+        if (isInitialized) {
+            localStorage.setItem('streetcart-cart', JSON.stringify(cartItems));
+        }
+    }, [cartItems, isInitialized]);
+
+    useEffect(() => {
+        if (isInitialized) {
+            localStorage.setItem('streetcart-wishlist', JSON.stringify(wishlistItems));
+        }
+    }, [wishlistItems, isInitialized]);
 
     const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
     const wishlistCount = wishlistItems.length;
@@ -41,10 +82,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             }
             return [...prev, { ...item, quantity: 1 }];
         });
+        setIsCartOpen(true); // Open cart when item is added
     };
 
     const removeFromCart = (id: number | string) => {
         setCartItems(prev => prev.filter(item => item.id !== id));
+    };
+
+    const updateQuantity = (id: number | string, change: number) => {
+        setCartItems(prev => prev.map(item => {
+            if (item.id === id) {
+                const newQuantity = Math.max(0, item.quantity + change);
+                return { ...item, quantity: newQuantity };
+            }
+            return item;
+        }).filter(item => item.quantity > 0));
     };
 
     const clearCart = () => {
@@ -71,7 +123,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             cartCount,
             addToCart,
             removeFromCart,
+            updateQuantity,
             clearCart,
+            isCartOpen,
+            setIsCartOpen,
             wishlistItems,
             wishlistCount,
             toggleWishlist,

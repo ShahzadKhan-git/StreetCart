@@ -10,7 +10,7 @@ export default function Navbar() {
     const pathname = usePathname();
     const isMainPage = pathname === '/' || pathname === '/main';
     const isFashionPage = pathname === '/fashion' || pathname === '/clothing' || pathname === '/men' || pathname === '/women';
-    const { cartCount, wishlistCount } = useCart();
+    const { cartCount, wishlistCount, setIsCartOpen } = useCart();
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 glass h-20 transition-all duration-300">
@@ -68,7 +68,10 @@ export default function Navbar() {
                             )}
                         </Link>
 
-                        <button className="relative group p-1">
+                        <button
+                            className="relative group p-1"
+                            onClick={() => setIsCartOpen(true)}
+                        >
                             <ShoppingCart className="w-5 h-5 text-gray-700 group-hover:text-black transition-all group-hover:scale-110" />
                             {cartCount > 0 && (
                                 <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[10px] font-bold text-white transition-all scale-100 group-hover:scale-110">
