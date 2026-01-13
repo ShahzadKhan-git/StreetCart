@@ -42,6 +42,48 @@ const WOMEN_CLOTHING = [
         price: "₹1,499",
         store: "Winter Warmth",
         image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 7,
+        title: "Silk Slip Dress",
+        price: "₹3,499",
+        store: "Evening Luxe",
+        image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 8,
+        title: "Bohemian Jumpsuit",
+        price: "₹2,199",
+        store: "Free Spirit",
+        image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 9,
+        title: "Leather Biker Jacket",
+        price: "₹4,899",
+        store: "Edge Fashion",
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 10,
+        title: "Linen Wide-Leg Trousers",
+        price: "₹1,899",
+        store: "Minimalist",
+        image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 11,
+        title: "Velvet Party Top",
+        price: "₹1,399",
+        store: "Night Out",
+        image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 12,
+        title: "Oversized Cashmere Cardigan",
+        price: "₹2,799",
+        store: "Soft Touch",
+        image: "https://images.unsplash.com/photo-1583846714867-52c374934a25?w=600&auto=format&fit=crop&q=60"
     }
 ];
 

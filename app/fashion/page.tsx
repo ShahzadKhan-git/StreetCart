@@ -6,32 +6,32 @@ import ClothingCard from "@/components/ClothingCard";
 // Mock data for Latest Arrivals (Reusing generic clothing card for now to fill space at bottom)
 const LATEST_ARRIVALS = [
     {
-        id: 1,
-        title: "Casual Denim Shirt",
-        price: "₹1,299",
-        store: "Denim Hub",
-        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop&q=60"
+        id: 7,
+        title: "Tactical Cargo Pants",
+        price: "₹1,799",
+        store: "Urban Tech",
+        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop&q=60"
     },
     {
-        id: 2,
-        title: "Basic White Tee",
-        price: "₹499",
-        store: "Essentials",
-        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&auto=format&fit=crop&q=60"
+        id: 11,
+        title: "Velvet Party Top",
+        price: "₹1,399",
+        store: "Night Out",
+        image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600&auto=format&fit=crop&q=60"
     },
     {
-        id: 3,
-        title: "Summer floral Dress",
-        price: "₹2,499",
-        store: "Vogue",
-        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=60"
+        id: 8,
+        title: "Linen Summer Shirt",
+        price: "₹1,599",
+        store: "Coastal Breeze",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop&q=60"
     },
     {
-        id: 4,
-        title: "Urban Hoodie",
+        id: 10,
+        title: "Linen Wide-Leg Trousers",
         price: "₹1,899",
-        store: "Street Style",
-        image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format&fit=crop&q=60"
+        store: "Minimalist",
+        image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=60"
     }
 ];
 
@@ -88,10 +88,10 @@ export default function FashionPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
                     {/* Reusing some mock products for preview */}
                     {[
-                        { id: 101, title: "Casual Denim Shirt", price: "₹1,299", store: "Denim Hub", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop&q=60" },
-                        { id: 102, title: "Basic White Tee", price: "₹499", store: "Essentials", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&auto=format&fit=crop&q=60" },
-                        { id: 103, title: "Urban Hoodie", price: "₹1,899", store: "Street Style", image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format&fit=crop&q=60" },
-                        { id: 104, title: "Slim Fit Chinos", price: "₹1,499", store: "Men's Wear", image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&auto=format&fit=crop&q=60" }
+                        { id: 10, title: "Wool Blend Overcoat", price: "₹5,499", store: "Heritage Tailors", image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&auto=format&fit=crop&q=60" },
+                        { id: 11, title: "Graphic Skate Hoodie", price: "₹2,199", store: "Street Style", image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600&auto=format&fit=crop&q=60" },
+                        { id: 12, title: "Tailored Navy Blazer", price: "₹3,299", store: "Formal Finishes", image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop&q=60" },
+                        { id: 9, title: "Heavyweight Boxy Tee", price: "₹799", store: "Essentials", image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop&q=60" }
                     ].map((item, idx) => (
                         <div key={item.id} className={`animation-delay-${(idx + 1) * 200}`}>
                             <ClothingCard {...item} />
@@ -115,10 +115,10 @@ export default function FashionPage() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
                     {[
-                        { id: 201, title: "Summer Floral Dress", price: "₹2,499", store: "Vogue", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=60" },
-                        { id: 202, title: "Cropped Denim Jacket", price: "₹1,999", store: "Denim & Co", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop&q=60" },
-                        { id: 203, title: "Elegant Blouse", price: "₹1,299", store: "Chic Styles", image: "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=600&auto=format&fit=crop&q=60" },
-                        { id: 204, title: "Maxi Skirt", price: "₹1,599", store: "Boho Vibes", image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&auto=format&fit=crop&q=60" }
+                        { id: 7, title: "Silk Slip Dress", price: "₹3,499", store: "Evening Luxe", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=60" },
+                        { id: 8, title: "Bohemian Jumpsuit", price: "₹2,199", store: "Free Spirit", image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=60" },
+                        { id: 9, title: "Leather Biker Jacket", price: "₹4,899", store: "Edge Fashion", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop&q=60" },
+                        { id: 12, title: "Oversized Cashmere Cardigan", price: "₹2,799", store: "Soft Touch", image: "https://images.unsplash.com/photo-1583846714867-52c374934a25?w=600&auto=format&fit=crop&q=60" }
                     ].map((item, idx) => (
                         <div key={item.id} className={`animation-delay-${(idx + 1) * 200}`}>
                             <ClothingCard {...item} />

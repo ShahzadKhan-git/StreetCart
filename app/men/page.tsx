@@ -42,6 +42,48 @@ const MEN_CLOTHING = [
         price: "₹899",
         store: "Classic Fits",
         image: "https://images.unsplash.com/photo-1626557981101-aae6f84aa6ff?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 7,
+        title: "Tactical Cargo Pants",
+        price: "₹1,799",
+        store: "Urban Tech",
+        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 8,
+        title: "Linen Summer Shirt",
+        price: "₹1,599",
+        store: "Coastal Breeze",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 9,
+        title: "Heavyweight Boxy Tee",
+        price: "₹799",
+        store: "Essentials",
+        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 10,
+        title: "Wool Blend Overcoat",
+        price: "₹5,499",
+        store: "Heritage Tailors",
+        image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 11,
+        title: "Graphic Skate Hoodie",
+        price: "₹2,199",
+        store: "Street Style",
+        image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600&auto=format&fit=crop&q=60"
+    },
+    {
+        id: 12,
+        title: "Tailored Navy Blazer",
+        price: "₹3,299",
+        store: "Formal Finishes",
+        image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop&q=60"
     }
 ];
 
