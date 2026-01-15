@@ -2,15 +2,30 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, ShoppingCart, User, Menu, Heart } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu, Heart, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
     const pathname = usePathname();
-    const isMainPage = pathname === '/' || pathname === '/main';
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const isFashionPage = pathname === '/fashion' || pathname === '/clothing' || pathname === '/men' || pathname === '/women';
     const { cartCount, wishlistCount, setIsCartOpen } = useCart();
+
+    // Close mobile menu on route change
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
+
+    // Prevent scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isMobileMenuOpen]);
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 glass h-20 transition-all duration-300">
@@ -24,8 +39,8 @@ export default function Navbar() {
                 </Link>
 
                 {/* 2. Navigation Links (Center-Left) - Hidden on Mobile */}
-                <div className="hidden lg:flex items-center gap-8 text-[13px] font-bold uppercase tracking-widest text-gray-500">
-                    <Link href="/" className={`hover:text-black transition-colors ${pathname === '/' ? 'text-green-700' : ''}`}>Main Page</Link>
+                <div className="hidden lg:flex items-center gap-6 text-[11px] xl:text-[13px] font-bold uppercase tracking-widest text-gray-500">
+                    <Link href="/" className={`hover:text-black transition-colors ${pathname === '/' ? 'text-green-700' : ''}`}>Main</Link>
                     <Link href="/kirana" className={`hover:text-black transition-colors ${pathname === '/kirana' ? 'text-green-700' : ''}`}>Kirana</Link>
                     <Link href="/clothing" className={`hover:text-black transition-colors ${pathname === '/clothing' ? 'text-green-700' : ''}`}>Clothing</Link>
                     <Link href="/fashion" className={`hover:text-black transition-colors ${pathname === '/fashion' ? 'text-green-700' : ''}`}>Fashion</Link>
@@ -37,14 +52,14 @@ export default function Navbar() {
                     )}
                 </div>
 
-                {/* 3. Search Bar (Center) - Hidden on Mobile */}
-                <div className="hidden md:flex flex-1 max-w-sm relative group">
+                {/* 3. Search Bar (Center) - Hidden on very small screens, visible on md+ */}
+                <div className="hidden md:flex flex-1 max-w-[200px] lg:max-w-sm relative group">
                     <input
                         type="text"
-                        placeholder="Search for local brands..."
-                        className="w-full h-11 pl-12 pr-4 bg-gray-100/80 rounded-full text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:bg-white transition-all ring-1 ring-gray-200"
+                        placeholder="Search..."
+                        className="w-full h-10 pl-10 pr-4 bg-gray-100/80 rounded-full text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:bg-white transition-all ring-1 ring-gray-200"
                     />
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-green-600 transition-colors" />
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 group-focus-within:text-green-600 transition-colors" />
                 </div>
 
                 {/* 4. Right Actions */}
@@ -58,7 +73,7 @@ export default function Navbar() {
                         </Link>
                     </div>
 
-                    <div className="flex items-center gap-5 border-l border-gray-200 pl-6">
+                    <div className="flex items-center gap-3 md:gap-5 md:border-l md:border-gray-200 md:pl-6">
                         <Link href="/favorites" className="relative group p-1">
                             <Heart className="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-all group-hover:scale-110" />
                             {wishlistCount > 0 && (
@@ -81,9 +96,78 @@ export default function Navbar() {
                         </button>
 
                         {/* Mobile Menu Button */}
-                        <button className="lg:hidden p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button
+                            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            onClick={() => setIsMobileMenuOpen(true)}
+                        >
                             <Menu className="w-6 h-6 text-gray-700" />
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            <div className={`fixed inset-0 z-[60] lg:hidden transition-all duration-500 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}>
+                {/* Backdrop */}
+                <div
+                    className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                />
+
+                {/* Menu Content */}
+                <div className={`absolute top-0 right-0 bottom-0 w-[80%] max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                    <div className="flex flex-col h-full">
+                        <div className="flex items-center justify-between p-6 border-b">
+                            <span className="text-xl font-black tracking-tighter text-gray-900">
+                                STREET<span className="text-green-600">CART</span>
+                            </span>
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                            >
+                                <X className="w-6 h-6 text-gray-500" />
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto py-8 px-6">
+                            <div className="flex flex-col gap-6">
+                                <Link href="/" className="text-lg font-bold text-gray-900 flex items-center justify-between">
+                                    Main Page
+                                    <span className={`w-2 h-2 rounded-full bg-green-600 ${pathname === '/' ? 'opacity-100' : 'opacity-0'}`} />
+                                </Link>
+                                <Link href="/kirana" className="text-lg font-bold text-gray-900 flex items-center justify-between">
+                                    Kirana Stores
+                                    <span className={`w-2 h-2 rounded-full bg-green-600 ${pathname === '/kirana' ? 'opacity-100' : 'opacity-0'}`} />
+                                </Link>
+                                <Link href="/clothing" className="text-lg font-bold text-gray-900 flex items-center justify-between">
+                                    Clothing Stores
+                                    <span className={`w-2 h-2 rounded-full bg-green-600 ${pathname === '/clothing' ? 'opacity-100' : 'opacity-0'}`} />
+                                </Link>
+                                <Link href="/fashion" className="text-lg font-bold text-gray-900 flex items-center justify-between">
+                                    Fashion Hub
+                                    <span className={`w-2 h-2 rounded-full bg-green-600 ${pathname === '/fashion' ? 'opacity-100' : 'opacity-0'}`} />
+                                </Link>
+
+                                {isFashionPage && (
+                                    <div className="pt-6 border-t flex flex-col gap-6">
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Shop by Category</p>
+                                        <Link href="/men" className="text-lg font-bold text-gray-900">Men</Link>
+                                        <Link href="/women" className="text-lg font-bold text-gray-900">Women</Link>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="p-6 border-t bg-gray-50">
+                            <Link
+                                href="/auth"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2"
+                            >
+                                <User className="w-4 h-4" />
+                                My Account
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -21,31 +21,31 @@ export default function Home() {
           />
         </div>
 
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
-          Your Nearby Stores, <span className="text-green-600">Online</span>
+        <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+          Your Nearby Stores, <br className="sm:hidden" /> <span className="text-green-600">Online</span>
         </h1>
 
         <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-10 leading-relaxed font-medium">
           Shop groceries and clothing from trusted local vendors around you with fast delivery and better pricing.
         </p>
 
-        <button className="flex items-center gap-3 bg-white border border-gray-200 text-gray-900 font-semibold py-4 px-10 rounded-full shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-          <MapPin className="w-6 h-6 text-green-600 fill-green-600 group-hover:scale-110 transition-transform" />
-          <span className="text-lg">Enable Location</span>
+        <button className="flex items-center gap-3 bg-white border border-gray-200 text-gray-900 font-semibold py-3 px-8 md:py-4 md:px-10 rounded-full shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+          <MapPin className="w-5 h-5 md:w-6 md:h-6 text-green-600 fill-green-600 group-hover:scale-110 transition-transform" />
+          <span className="text-base md:text-lg">Enable Location</span>
         </button>
       </section>
 
       {/* 3. Category Section */}
-      <section className="w-full max-w-5xl px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="w-full max-w-5xl px-6 py-8 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <CategoryCard
-            icon={<Store className="w-10 h-10" />}
+            icon={<Store className="w-8 h-8 md:w-10 md:h-10" />}
             title="Kirana & Groceries"
             subtitle="Daily essentials near you"
           />
           <Link href="/fashion" className="block">
             <CategoryCard
-              icon={<Shirt className="w-10 h-10" />}
+              icon={<Shirt className="w-8 h-8 md:w-10 md:h-10" />}
               title="Clothing Stores"
               subtitle="Fashion from local shops"
             />
@@ -54,13 +54,13 @@ export default function Home() {
       </section>
 
       {/* 4. Why Choose Us Section */}
-      <section className="w-full max-w-5xl px-6 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <section className="w-full max-w-5xl px-6 py-12 md:py-16">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 md:mb-6">
           Why Choose Us?
         </h2>
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12">
           {/* Left: Checkmarks */}
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-col gap-4 w-full">
             {[
               "Local vendors",
               "Better pricing",
@@ -68,10 +68,10 @@ export default function Home() {
               "Support local businesses"
             ].map((item, index) => (
               <div key={index} className="flex items-center gap-3">
-                <div className="text-green-600">
+                <div className="text-green-600 flex-shrink-0">
                   <Check className="w-5 h-5" />
                 </div>
-                <span className="text-lg text-gray-700">{item}</span>
+                <span className="text-base md:text-lg text-gray-700">{item}</span>
               </div>
             ))}
           </div>
