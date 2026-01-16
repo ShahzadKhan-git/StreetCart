@@ -1,11 +1,40 @@
 "use client";
 
 import CategoryCard from "@/components/CategoryCard";
-import { Store, Shirt, MapPin, Check } from "lucide-react";
+import { Store, Shirt, MapPin, Check, Loader2, Navigation } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [locationName, setLocationName] = useState("");
+
+  const handleEnableLocation = () => {
+    if (!navigator.geolocation) {
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
+
+    // Simulate reverse geocoding for a better UX
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // In a real app, you'd call a reverse geocoding API here
+        // We'll simulate finding a "Local Market" based on coords
+        setTimeout(() => {
+          setStatus("success");
+          setLocationName("Hauz Khas, New Delhi");
+        }, 1500);
+      },
+      (error) => {
+        console.error("Location error:", error);
+        setStatus("error");
+      },
+      { enableHighAccuracy: true }
+    );
+  };
   return (
     <div className="flex flex-col items-center w-full bg-gradient-to-b from-gray-50 to-white min-h-screen pt-20">
       {/* 2. Hero Section */}
@@ -29,10 +58,56 @@ export default function Home() {
           Shop groceries and clothing from trusted local vendors around you with fast delivery and better pricing.
         </p>
 
-        <button className="flex items-center gap-3 bg-white border border-gray-200 text-gray-900 font-semibold py-3 px-8 md:py-4 md:px-10 rounded-full shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-          <MapPin className="w-5 h-5 md:w-6 md:h-6 text-green-600 fill-green-600 group-hover:scale-110 transition-transform" />
-          <span className="text-base md:text-lg">Enable Location</span>
+        <button
+          onClick={handleEnableLocation}
+          disabled={status === "loading" || status === "success"}
+          className={`flex items-center gap-3 border font-semibold py-3 px-8 md:py-4 md:px-10 rounded-full shadow-sm transition-all duration-300 group
+            ${status === "success"
+              ? "bg-green-50 border-green-200 text-green-700"
+              : "bg-white border-gray-200 text-gray-900 h-14 md:h-16 hover:shadow-xl hover:-translate-y-1"
+            }
+          `}
+        >
+          {status === "idle" && (
+            <>
+              <MapPin className="w-5 h-5 md:w-6 md:h-6 text-green-600 fill-green-600 group-hover:scale-110 transition-transform" />
+              <span className="text-base md:text-lg">Enable Location</span>
+            </>
+          )}
+
+          {status === "loading" && (
+            <>
+              <Loader2 className="w-5 h-5 md:w-6 md:h-6 text-green-600 animate-spin" />
+              <span className="text-base md:text-lg">Detecting...</span>
+            </>
+          )}
+
+          {status === "success" && (
+            <>
+              <div className="flex items-center gap-2">
+                <Navigation className="w-5 h-5 md:w-6 md:h-6 text-green-600 fill-green-600" />
+                <div className="flex flex-col items-start text-left">
+                  <span className="text-[10px] font-black uppercase tracking-widest leading-none text-green-600 mb-1">Serving Area</span>
+                  <span className="text-sm md:text-base font-bold">{locationName}</span>
+                </div>
+                <div className="ml-2 bg-green-500 rounded-full p-1">
+                  <Check className="w-3 h-3 text-white" strokeWidth={4} />
+                </div>
+              </div>
+            </>
+          )}
+
+          {status === "error" && (
+            <>
+              <MapPin className="w-5 h-5 md:w-6 md:h-6 text-red-500 fill-red-100" />
+              <span className="text-base md:text-lg text-red-600">Location Denied</span>
+            </>
+          )}
         </button>
+
+        {status === "error" && (
+          <p className="mt-4 text-xs text-red-400 font-medium">Please enable location permissions in your browser settings to find stores near you.</p>
+        )}
       </section>
 
       {/* 3. Category Section */}
