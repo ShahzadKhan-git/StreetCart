@@ -1,10 +1,12 @@
 "use client";
 
-import CategoryCard from "@/components/CategoryCard";
-import { Store, Shirt, MapPin, Check, Loader2, Navigation } from "lucide-react";
+import { Store, Shirt, MapPin, Check, Loader2, Navigation, Zap, ShieldCheck, Truck, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import DynamicCategoryCard from "@/components/DynamicCategoryCard";
+import FeaturedStores from "@/components/home/FeaturedStores";
+import LiveTicker from "@/components/home/LiveTicker";
 
 export default function Home() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -18,11 +20,8 @@ export default function Home() {
 
     setStatus("loading");
 
-    // Simulate reverse geocoding for a better UX
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // In a real app, you'd call a reverse geocoding API here
-        // We'll simulate finding a "Local Market" based on coords
         setTimeout(() => {
           setStatus("success");
           setLocationName("Hauz Khas, New Delhi");
@@ -35,127 +34,155 @@ export default function Home() {
       { enableHighAccuracy: true }
     );
   };
+
   return (
-    <div className="flex flex-col items-center w-full bg-gradient-to-b from-gray-50 to-white min-h-screen pt-20">
-      {/* 2. Hero Section */}
-      <section className="w-full py-20 px-6 flex flex-col items-center text-center max-w-7xl mx-auto">
-        {/* Centered Logo */}
-        <div className="mb-8 relative w-[280px] h-[100px] md:w-[320px] md:h-[120px] transition-all duration-500 hover:scale-105">
-          <Image
-            src="/logo.png"
-            alt="StreetCart"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
+    <div className="flex flex-col items-center w-full bg-white min-h-screen">
+      {/* 1. Live Activity Ticker */}
+      <LiveTicker />
 
-        <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
-          Your Nearby Stores, <br className="sm:hidden" /> <span className="text-green-600">Online</span>
-        </h1>
+      {/* 2. Hero Section with Mesh Gradient */}
+      <section className="w-full relative mesh-gradient pt-24 pb-20 md:pt-32 md:pb-32 px-6 overflow-hidden">
+        {/* Floating Decorative Elements */}
+        <div className="absolute top-1/4 -left-12 w-48 h-48 bg-green-200/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-12 w-64 h-64 bg-green-300/10 rounded-full blur-3xl animate-pulse delay-700" />
 
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-10 leading-relaxed font-medium">
-          Shop groceries and clothing from trusted local vendors around you with fast delivery and better pricing.
-        </p>
-
-        <button
-          onClick={handleEnableLocation}
-          disabled={status === "loading" || status === "success"}
-          className={`flex items-center gap-3 border font-semibold py-3 px-8 md:py-4 md:px-10 rounded-full shadow-sm transition-all duration-300 group
-            ${status === "success"
-              ? "bg-green-50 border-green-200 text-green-700"
-              : "bg-white border-gray-200 text-gray-900 h-14 md:h-16 hover:shadow-xl hover:-translate-y-1"
-            }
-          `}
-        >
-          {status === "idle" && (
-            <>
-              <MapPin className="w-5 h-5 md:w-6 md:h-6 text-green-600 fill-green-600 group-hover:scale-110 transition-transform" />
-              <span className="text-base md:text-lg">Enable Location</span>
-            </>
-          )}
-
-          {status === "loading" && (
-            <>
-              <Loader2 className="w-5 h-5 md:w-6 md:h-6 text-green-600 animate-spin" />
-              <span className="text-base md:text-lg">Detecting...</span>
-            </>
-          )}
-
-          {status === "success" && (
-            <>
-              <div className="flex items-center gap-2">
-                <Navigation className="w-5 h-5 md:w-6 md:h-6 text-green-600 fill-green-600" />
-                <div className="flex flex-col items-start text-left">
-                  <span className="text-[10px] font-black uppercase tracking-widest leading-none text-green-600 mb-1">Serving Area</span>
-                  <span className="text-sm md:text-base font-bold">{locationName}</span>
-                </div>
-                <div className="ml-2 bg-green-500 rounded-full p-1">
-                  <Check className="w-3 h-3 text-white" strokeWidth={4} />
-                </div>
-              </div>
-            </>
-          )}
-
-          {status === "error" && (
-            <>
-              <MapPin className="w-5 h-5 md:w-6 md:h-6 text-red-500 fill-red-100" />
-              <span className="text-base md:text-lg text-red-600">Location Denied</span>
-            </>
-          )}
-        </button>
-
-        {status === "error" && (
-          <p className="mt-4 text-xs text-red-400 font-medium">Please enable location permissions in your browser settings to find stores near you.</p>
-        )}
-      </section>
-
-      {/* 3. Category Section */}
-      <section className="w-full max-w-5xl px-6 py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          <CategoryCard
-            icon={<Store className="w-8 h-8 md:w-10 md:h-10" />}
-            title="Kirana & Groceries"
-            subtitle="Daily essentials near you"
-          />
-          <Link href="/fashion" className="block">
-            <CategoryCard
-              icon={<Shirt className="w-8 h-8 md:w-10 md:h-10" />}
-              title="Clothing Stores"
-              subtitle="Fashion from local shops"
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
+          {/* Centered Logo */}
+          <div className="mb-10 relative w-[240px] h-[80px] md:w-[300px] md:h-[100px] transition-all duration-700 hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="StreetCart"
+              fill
+              className="object-contain"
+              priority
             />
-          </Link>
-        </div>
-      </section>
-
-      {/* 4. Why Choose Us Section */}
-      <section className="w-full max-w-5xl px-6 py-12 md:py-16">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 md:mb-6">
-          Why Choose Us?
-        </h2>
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12">
-          {/* Left: Checkmarks */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-col gap-4 w-full">
-            {[
-              "Local vendors",
-              "Better pricing",
-              "Faster delivery",
-              "Support local businesses"
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="text-green-600 flex-shrink-0">
-                  <Check className="w-5 h-5" />
-                </div>
-                <span className="text-base md:text-lg text-gray-700">{item}</span>
-              </div>
-            ))}
           </div>
 
-          {/* Right: CTA Button */}
-          <div className="w-full md:w-auto mt-4 md:mt-0">
-            <Link href="/auth" className="inline-block w-full md:w-auto bg-gradient-to-r from-[#508D69] to-[#2E5E4E] hover:opacity-90 text-white font-medium py-3 px-12 rounded shadow transition-all text-lg text-center">
-              Login / Register
-            </Link>
+          <div className="animate-fade-in-up">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-gray-950 mb-8 tracking-tighter leading-[0.9] italic">
+              LOCAL STORES <br />
+              <span className="text-green-600 not-italic">NOW ONLINE.</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-12 leading-relaxed font-medium mx-auto">
+              Your neighborhood's favorites, delivered to your doorstep. Support local businesses with the convenience of modern e-commerce.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={handleEnableLocation}
+                disabled={status === "loading" || status === "success"}
+                className={`flex items-center gap-3 border font-black py-4 px-10 rounded-full shadow-lg transition-all duration-300 group min-w-[280px] justify-center
+                ${status === "success"
+                    ? "bg-green-50 border-green-200 text-green-700"
+                    : "bg-gray-950 border-gray-800 text-white h-16 hover:bg-black hover:shadow-2xl hover:-translate-y-1"
+                  }
+              `}
+              >
+                {status === "idle" && (
+                  <>
+                    <MapPin className="w-5 h-5 text-green-500 fill-green-500 group-hover:scale-110 transition-transform" />
+                    <span className="text-base uppercase tracking-widest">Detect My Location</span>
+                  </>
+                )}
+
+                {status === "loading" && (
+                  <>
+                    <Loader2 className="w-5 h-5 text-green-500 animate-spin" />
+                    <span className="text-base uppercase tracking-widest">Locating...</span>
+                  </>
+                )}
+
+                {status === "success" && (
+                  <>
+                    <Navigation className="w-5 h-5 text-green-600 fill-green-600" />
+                    <div className="flex flex-col items-start text-left">
+                      <span className="text-[9px] font-black uppercase tracking-widest leading-none text-green-600 mb-1">Serving</span>
+                      <span className="text-sm font-bold">{locationName}</span>
+                    </div>
+                    <div className="ml-2 bg-green-500 rounded-full p-1">
+                      <Check className="w-2.5 h-2.5 text-white" strokeWidth={4} />
+                    </div>
+                  </>
+                )}
+              </button>
+
+              <Link href="/auth" className="h-16 flex items-center justify-center px-10 border-2 border-gray-200 rounded-full font-black uppercase tracking-widest text-sm text-gray-950 hover:bg-gray-50 transition-colors bg-white/50 backdrop-blur-sm">
+                Join Us
+              </Link>
+            </div>
+
+            {status === "error" && (
+              <p className="mt-6 text-sm text-red-500 font-bold uppercase tracking-widest">Enable location permissions in settings</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Category Grid */}
+      <section className="w-full max-w-7xl px-6 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <DynamicCategoryCard
+            title="Kirana & Groceries"
+            subtitle="Daily essentials and fresh produce from local vendors"
+            image="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80"
+            href="/kirana"
+            className="animate-fade-in-up"
+          />
+          <DynamicCategoryCard
+            title="Fashion & Clothing"
+            subtitle="Trending streetwear and essentials from local boutiques"
+            image="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
+            href="/fashion"
+            className="animate-fade-in-up animation-delay-200"
+          />
+        </div>
+      </section>
+
+      {/* 4. Featured Stores Section */}
+      <div className="w-full bg-gray-50/50 border-y border-gray-100">
+        <FeaturedStores />
+      </div>
+
+      {/* 5. Premium Benefits Card */}
+      <section className="w-full max-w-7xl px-6 py-24">
+        <div className="bg-gray-950 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden group">
+          {/* Decorative Gradient */}
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-green-500/10 to-transparent pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-green-500 mb-4 block">The StreetCart Edge</span>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-tight italic">
+                WHY SHOP <br />
+                <span className="text-green-500 not-italic">WITH US?</span>
+              </h2>
+              <p className="text-gray-400 text-lg font-medium max-w-md mb-10 leading-relaxed">
+                We bridge the gap between your favorite local shops and the digital convenience of online ordering.
+              </p>
+              <Link href="/auth" className="inline-flex items-center gap-3 bg-white text-black font-black uppercase tracking-widest text-xs py-5 px-10 rounded-full hover:bg-green-500 hover:text-white transition-all duration-500">
+                Get Started Now <Zap className="w-4 h-4 fill-current" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+              {[
+                { icon: <Store className="w-6 h-6" />, title: "Local Vendors", desc: "Sourced directlyจาก neighborhood stores" },
+                { icon: <ShieldCheck className="w-6 h-6" />, title: "Best Pricing", desc: "Direct vendor prices with no hidden markups" },
+                { icon: <Truck className="w-6 h-6" />, title: "Hyper-Local", desc: "Delivery within minutes, not days" },
+                { icon: <Sparkles className="w-6 h-6" />, title: "Premium Quality", desc: "Handpicked partners for the best experience" }
+              ].map((benefit, i) => (
+                <div key={i} className="flex flex-col gap-4 group/item">
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-green-500 group-hover/item:scale-110 transition-transform duration-300">
+                    {benefit.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">{benefit.title}</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">{benefit.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
