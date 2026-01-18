@@ -3,6 +3,7 @@
 import { X, Plus, Minus, Trash2, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CartDrawer() {
@@ -15,6 +16,7 @@ export default function CartDrawer() {
         cartCount
     } = useCart();
     const [isMounted, setIsMounted] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         setIsMounted(true);
@@ -26,6 +28,11 @@ export default function CartDrawer() {
         (acc, item) => acc + parseInt(item.price.replace('₹', '').replace(',', '')) * item.quantity,
         0
     );
+
+    const handleCheckout = () => {
+        setIsCartOpen(false);
+        router.push('/checkout');
+    };
 
     return (
         <>
@@ -150,7 +157,10 @@ export default function CartDrawer() {
                                 <span>₹{subtotal.toLocaleString()}</span>
                             </div>
                         </div>
-                        <button className="w-full py-4 bg-gray-900 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-gray-200 hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0">
+                        <button
+                            onClick={handleCheckout}
+                            className="w-full py-4 bg-gray-900 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-gray-200 hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0"
+                        >
                             Proceed to Checkout
                         </button>
                         <p className="text-[10px] text-gray-400 text-center mt-4 uppercase tracking-widest font-bold">
