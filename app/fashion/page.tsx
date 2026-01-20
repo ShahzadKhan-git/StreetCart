@@ -29,52 +29,88 @@ const FASHION_PRODUCTS = [
 
 export default function FashionPage() {
     const [selectedCategory, setSelectedCategory] = useState<'all' | 'men' | 'women'>('all');
+    const [isTransitioning, setIsTransitioning] = useState(false);
+
+    const handleCategoryChange = (cat: 'all' | 'men' | 'women') => {
+        if (cat === selectedCategory) return;
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setSelectedCategory(cat);
+            setIsTransitioning(false);
+        }, 300);
+    };
 
     const filteredProducts = selectedCategory === 'all'
         ? FASHION_PRODUCTS
         : FASHION_PRODUCTS.filter(p => p.category === selectedCategory);
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white mesh-gradient-dynamic">
             <Navbar />
 
-            {/* 1. Hero Slider */}
-            <HeroSlider />
+            {/* 1. Hero Slider - Enhanced with Floating Content */}
+            <div className="relative group">
+                <HeroSlider />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none text-center hidden md:block">
+                    <div className="animate-float">
+                        <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.5em] mb-4 block drop-shadow-2xl">Season 2026</span>
+                        <h1 className="text-8xl font-black text-white tracking-[1vw] uppercase opacity-20 group-hover:opacity-40 transition-opacity duration-1000">STREETCART</h1>
+                    </div>
+                </div>
+            </div>
 
-            {/* 2. Popular Categories */}
-            <HomeCategoryGrid />
+            {/* 2. Popular Categories - Subtle Fade In */}
+            <div className="animate-fade-in-up animation-delay-300">
+                <HomeCategoryGrid />
+            </div>
 
-            {/* 3. Consolidated Collection with Category Selection */}
-            <section className="py-24 px-6 max-w-[1440px] mx-auto animate-fade-in-up">
-                <div className="flex flex-col items-center text-center mb-16 gap-6">
-                    <div className="max-w-2xl">
-                        <span className="text-[10px] font-black text-green-600 uppercase tracking-[0.3em] mb-4 block">Fashion Hub</span>
-                        <h2 className="text-4xl md:text-7xl font-black text-gray-950 tracking-tighter leading-none mb-6 italic">The Collection</h2>
-                        <p className="text-gray-500 font-medium leading-relaxed">
-                            Curated from the best local boutiques. Use the filter below to explore men's streetwear or women's trending styles.
+            {/* 3. Consolidated Collection with Dynamic Selector */}
+            <section className="py-32 px-6 max-w-[1440px] mx-auto">
+                <div className="flex flex-col items-center text-center mb-24 gap-10">
+                    <div className="max-w-3xl animate-fade-in-up">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 rounded-full mb-6 ring-1 ring-green-100">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-[9px] font-black text-green-700 uppercase tracking-widest">Live Collection</span>
+                        </div>
+                        <h2 className="text-5xl md:text-8xl font-black text-gray-950 tracking-[-0.04em] leading-[0.9] mb-8 italic uppercase">
+                            The <br className="md:hidden" /> Manifesto
+                        </h2>
+                        <p className="text-gray-400 font-medium leading-relaxed max-w-xl mx-auto text-lg">
+                            We bridge the gap between street culture and luxury aesthetics. Filtering the noise to bring you the signal.
                         </p>
                     </div>
 
-                    {/* Category Selector */}
-                    <div className="flex items-center gap-2 p-1.5 bg-gray-100 rounded-[24px] mt-4 shadow-inner ring-1 ring-gray-200/50">
+                    {/* Enhanced Category Selector - Magnetic Feel */}
+                    <div className="relative flex items-center p-2 bg-gray-50 rounded-[40px] shadow-2xl shadow-gray-200/50 ring-1 ring-gray-100 animate-fade-in-up animation-delay-200">
                         {['all', 'men', 'women'].map((cat) => (
                             <button
                                 key={cat}
-                                onClick={() => setSelectedCategory(cat as any)}
-                                className={`px-10 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${selectedCategory === cat
-                                        ? "bg-white text-black shadow-lg shadow-gray-200/50 ring-1 ring-gray-100"
-                                        : "text-gray-400 hover:text-gray-900"
+                                onClick={() => handleCategoryChange(cat as any)}
+                                className={`relative z-10 px-12 py-4 rounded-[32px] text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-500 btn-magnetic ${selectedCategory === cat
+                                    ? "text-black"
+                                    : "text-gray-400 hover:text-gray-600"
                                     }`}
                             >
                                 {cat}
+                                {selectedCategory === cat && (
+                                    <div className="absolute inset-0 bg-white rounded-[32px] shadow-xl shadow-gray-200/80 -z-10 animate-scale-in" />
+                                )}
                             </button>
                         ))}
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 transition-all duration-500">
+                {/* Product Grid with Smooth Transition */}
+                <div
+                    className={`grid grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-20 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4 scale-95 blur-sm' : 'opacity-100 translate-y-0 scale-100 blur-0'
+                        }`}
+                >
                     {filteredProducts.map((item, idx) => (
-                        <div key={item.id} className="animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                        <div
+                            key={item.id}
+                            className="animate-fade-in-up"
+                            style={{ animationDelay: `${idx * 150}ms` }}
+                        >
                             <ClothingCard
                                 id={item.id}
                                 title={item.title}
@@ -86,9 +122,10 @@ export default function FashionPage() {
                     ))}
                 </div>
 
-                {filteredProducts.length === 0 && (
-                    <div className="py-20 text-center">
-                        <p className="text-gray-400 font-medium">No products found in this category.</p>
+                {filteredProducts.length === 0 && !isTransitioning && (
+                    <div className="py-32 text-center animate-fade-in-up">
+                        <div className="text-6xl mb-6 opacity-20">∅</div>
+                        <p className="text-gray-400 font-medium uppercase tracking-widest text-xs">Nothing to show for this filter</p>
                     </div>
                 )}
             </section>

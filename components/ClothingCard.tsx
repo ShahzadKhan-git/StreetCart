@@ -32,66 +32,75 @@ export default function ClothingCard({ id, image, title, price, store }: Clothin
     };
 
     return (
-        <div className="group relative bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden cursor-pointer hover:-translate-y-1">
+        <div className="group relative bg-white rounded-[28px] shadow-sm hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 border border-gray-100 overflow-hidden cursor-pointer hover:-translate-y-2">
             {/* Image Container */}
-            <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100">
+            <div className="relative aspect-[3/4.2] w-full overflow-hidden bg-gray-50">
                 <Image
                     src={image}
                     alt={title}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000 ease-out p-1 rounded-[32px]"
                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 />
 
-                {/* Wishlist Button (Top Right) - More refined glass */}
+                {/* Glass Badge (Top Left) */}
+                <div className="absolute top-4 left-4 px-3 py-1.5 bg-white/80 backdrop-blur-md rounded-full border border-white/40 shadow-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                    <span className="text-[8px] font-black text-gray-900 tracking-widest uppercase">New In</span>
+                </div>
+
+                {/* Wishlist Button (Top Right) - Floating Feel */}
                 <button
-                    className={`absolute top-3 right-3 p-2 rounded-full shadow-lg transition-all duration-400 opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 ${isFavorited ? 'bg-white text-red-500' : 'bg-white/40 backdrop-blur-md text-gray-800 hover:text-red-500 hover:bg-white'
+                    className={`absolute top-4 right-4 p-2.5 rounded-full shadow-xl transition-all duration-500 z-10 ${isFavorited ? 'bg-red-500 text-white translate-y-0 scale-100' : 'bg-white/90 text-gray-800 hover:text-red-500 hover:bg-white translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 scale-90 group-hover:scale-100'
                         }`}
                     onClick={handleToggleWishlist}
                 >
-                    <Heart className={`w-4.5 h-4.5 ${isFavorited ? 'fill-current' : ''}`} />
+                    <Heart className={`w-4 h-4 ${isFavorited ? 'fill-current' : ''}`} />
                 </button>
 
-                {/* Modern Bottom Overlay - Glassmorphism */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out bg-black/10 backdrop-blur-md border-t border-white/20 flex gap-2">
-                    {/* Wishlist Button */}
-                    <button
-                        onClick={handleToggleWishlist}
-                        className={`flex-1 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-tighter transition-all duration-300 ${isFavorited ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-900 hover:bg-white'
-                            }`}
-                    >
-                        <Heart className={`w-3.5 h-3.5 ${isFavorited ? 'fill-current' : ''}`} />
-                        {isFavorited ? 'SAVED' : 'WISH'}
-                    </button>
-
-                    {/* Add to Cart Button */}
-                    <button
-                        onClick={handleAddToCart}
-                        className={`flex-[2.5] py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-tighter transition-all duration-300 ${isAdded ? 'bg-green-500 text-white' : 'bg-gray-900 text-white hover:bg-black'
-                            }`}
-                    >
-                        {isAdded ? (
-                            <>✓ ADDED</>
-                        ) : (
-                            <>
-                                <ShoppingCart className="w-3.5 h-3.5" />
-                                ADD TO CART
-                            </>
-                        )}
-                    </button>
+                {/* Interactive Bottom Actions - Slide & Blur */}
+                <div className="absolute inset-x-0 bottom-4 px-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out z-20">
+                    <div className="bg-white/80 backdrop-blur-xl border border-white/20 p-2 rounded-2xl shadow-2xl flex gap-2">
+                        {/* Add to Cart Button */}
+                        <button
+                            onClick={handleAddToCart}
+                            className={`flex-1 py-3.5 rounded-xl flex items-center justify-center gap-2 font-black text-[9px] uppercase tracking-[0.15em] transition-all duration-300 btn-magnetic ${isAdded ? 'bg-green-600 text-white' : 'bg-gray-950 text-white hover:bg-black'
+                                }`}
+                        >
+                            {isAdded ? (
+                                <>✓ ADDED</>
+                            ) : (
+                                <>
+                                    <ShoppingCart className="w-3.5 h-3.5" />
+                                    ADD TO CART
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </div>
+
+                {/* Subtle Vignette Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             </div>
 
-            {/* Content - Modern Typography */}
-            <div className="p-5">
-                <div className="text-[10px] font-black text-green-600 mb-1.5 uppercase tracking-[0.2em]">{store}</div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-green-700 transition-colors">{title}</h3>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                        <span className="text-base font-black text-gray-950">{price}</span>
-                        <span className="text-xs text-gray-400 font-medium line-through">₹{parseInt(price.replace('₹', '').replace(',', '')) * 1.5}</span>
+            {/* Content - Refined Visual Hierarchy */}
+            <div className="p-6 transition-colors duration-500">
+                <div className="flex justify-between items-start mb-2">
+                    <div className="text-[10px] font-black text-green-600 uppercase tracking-[0.2em]">{store}</div>
+                    <div className="px-2 py-0.5 bg-green-50 rounded text-[8px] font-black text-green-600 uppercase tracking-wider">Fast Ship</div>
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-3 line-clamp-1 group-hover:text-green-700 transition-colors duration-300 leading-snug">{title}</h3>
+                <div className="flex items-end justify-between">
+                    <div>
+                        <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">Price</div>
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-lg font-black text-gray-950 tracking-tight">{price}</span>
+                            <span className="text-xs text-gray-300 font-black line-through">₹{parseInt(price.replace('₹', '').replace(',', '')) * 1.5}</span>
+                        </div>
                     </div>
-                    <div className="px-2 py-0.5 bg-orange-50 rounded text-[9px] font-black text-orange-600 uppercase tracking-wider">50% OFF</div>
+                    <div className="flex flex-col items-end">
+                        <span className="text-[9px] font-black text-orange-600 uppercase tracking-widest">Limited Offer</span>
+                        <span className="text-[11px] font-black text-gray-900 italic">-50% OFF</span>
+                    </div>
                 </div>
             </div>
         </div>
