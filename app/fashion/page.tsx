@@ -6,7 +6,6 @@ import HeroSlider from "@/components/home/HeroSlider";
 import HomeCategoryGrid from "@/components/home/HomeCategoryGrid";
 import ClothingCard from "@/components/ClothingCard";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 // Consolidated Mock Data with Categories
 const FASHION_PRODUCTS = [
@@ -130,7 +129,7 @@ export default function FashionPage() {
                 )}
             </section>
 
-            <Footer />
+
         </div>
     );
 }

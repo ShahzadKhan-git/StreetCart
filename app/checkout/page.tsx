@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export default function CheckoutPage() {
     const { cartItems, clearCart } = useCart();
@@ -186,7 +185,6 @@ export default function CheckoutPage() {
                 </div>
             </main>
 
-            <Footer />
 
             <style jsx>{`
                 .custom-scrollbar::-webkit-scrollbar {
