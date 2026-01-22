@@ -1,7 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const CATEGORIES = [
+export interface CategoryItem {
+    id: number | string;
+    title: string;
+    image: string;
+    link: string;
+}
+
+const DEFAULT_CATEGORIES: CategoryItem[] = [
     {
         id: 1,
         title: "SHIRT STYLE",
@@ -28,17 +35,25 @@ const CATEGORIES = [
     }
 ];
 
-export default function HomeCategoryGrid() {
+interface HomeCategoryGridProps {
+    categories?: CategoryItem[];
+    title?: string;
+}
+
+export default function HomeCategoryGrid({
+    categories = DEFAULT_CATEGORIES,
+    title = "Popular Categories"
+}: HomeCategoryGridProps) {
     return (
         <section className="py-20 bg-white">
             <div className="max-w-[1440px] mx-auto px-6">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">Popular Categories</h2>
+                    <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">{title}</h2>
                     <div className="w-24 h-1 bg-gray-200 mx-auto rounded-full"></div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                    {CATEGORIES.map((cat) => (
+                    {categories.map((cat) => (
                         <Link
                             key={cat.id}
                             href={cat.link}

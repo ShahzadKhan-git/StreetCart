@@ -4,7 +4,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const SLIDES = [
+export interface HeroSlide {
+    id: number | string;
+    image: string;
+    title: string;
+    subtitle: string;
+    cta: string;
+    link: string;
+}
+
+const DEFAULT_SLIDES: HeroSlide[] = [
     {
         id: 1,
         image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop",
@@ -31,22 +40,26 @@ const SLIDES = [
     }
 ];
 
-export default function HeroSlider() {
+interface HeroSliderProps {
+    slides?: HeroSlide[];
+}
+
+export default function HeroSlider({ slides = DEFAULT_SLIDES }: HeroSliderProps) {
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrent((prev) => (prev + 1) % SLIDES.length);
+            setCurrent((prev) => (prev + 1) % slides.length);
         }, 5000);
         return () => clearInterval(timer);
-    }, []);
+    }, [slides.length]);
 
-    const nextSlide = () => setCurrent((prev) => (prev + 1) % SLIDES.length);
-    const prevSlide = () => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
+    const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
+    const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
     return (
         <div className="relative w-full h-[600px] md:h-[800px] overflow-hidden bg-gray-900 mt-20">
-            {SLIDES.map((slide, index) => (
+            {slides.map((slide, index) => (
                 <div
                     key={slide.id}
                     className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === current ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
@@ -113,7 +126,7 @@ export default function HeroSlider() {
 
             {/* Pagination Dots - Modern Linear */}
             <div className="absolute bottom-12 left-6 z-20 flex gap-3">
-                {SLIDES.map((_, index) => (
+                {slides.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrent(index)}

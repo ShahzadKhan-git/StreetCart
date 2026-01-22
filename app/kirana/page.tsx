@@ -1,148 +1,183 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft, Sparkles, Zap } from "lucide-react";
 import ClothingCard from "@/components/ClothingCard";
-import FilterBar from "@/components/FilterBar";
+import Navbar from "@/components/Navbar";
+import HeroSlider, { HeroSlide } from "@/components/home/HeroSlider";
+import HomeCategoryGrid, { CategoryItem } from "@/components/home/HomeCategoryGrid";
 
-// Mock Data for Kirana Products
-const PRODUCTS = [
+// Grocery-specific Hero Slides
+const KIRANA_SLIDES: HeroSlide[] = [
     {
         id: 1,
-        title: "Premium Basmati Rice",
-        price: "₹299",
-        store: "Grocery Hub",
-        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
-        category: "Grains"
+        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070&auto=format&fit=crop",
+        title: "FRESH HARVEST",
+        subtitle: "ORGANIC PRODUCE FROM LOCAL FARMS. DELIVERED TO YOUR DOORSTEP.",
+        cta: "Shop Fresh",
+        link: "/kirana"
     },
     {
         id: 2,
-        title: "Organic Turmeric Powder",
-        price: "₹89",
-        store: "Spice Corner",
-        image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80",
-        category: "Spices"
+        image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=2070&auto=format&fit=crop",
+        title: "DAILY ESSENTIALS",
+        subtitle: "EVERYTHING YOU NEED FOR YOUR KITCHEN. TRUSTED QUALITY.",
+        cta: "View Essentials",
+        link: "/kirana"
     },
     {
         id: 3,
-        title: "Fresh Cow Milk",
-        price: "₹65",
-        store: "Dairy Fresh",
-        image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
-        category: "Dairy"
-    },
-    {
-        id: 4,
-        title: "Whole Wheat Flour",
-        price: "₹149",
-        store: "Grain Market",
-        image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80",
-        category: "Flour"
-    },
-    {
-        id: 5,
-        title: "Sunflower Cooking Oil",
-        price: "₹199",
-        store: "Oil Depot",
-        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80",
-        category: "Oils"
-    },
-    {
-        id: 6,
-        title: "Red Chilli Powder",
-        price: "₹79",
-        store: "Spice Bazaar",
-        image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80",
-        category: "Spices"
-    },
-    {
-        id: 7,
-        title: "Sugar Cane Jaggery",
-        price: "₹129",
-        store: "Sweet Store",
-        image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80",
-        category: "Sweeteners"
-    },
-    {
-        id: 8,
-        title: "Green Tea Leaves",
-        price: "₹159",
-        store: "Tea House",
-        image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80",
-        category: "Beverages"
+        image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=2070&auto=format&fit=crop",
+        title: "SPICES & FLAVORS",
+        subtitle: "AUTHENTIC SPICES TO ELEVATE YOUR COOKING.",
+        cta: "Shop Spices",
+        link: "/kirana"
     }
 ];
 
+// Grocery-specific Categories
+const KIRANA_CATEGORIES: CategoryItem[] = [
+    {
+        id: 1,
+        title: "GRAINS & PULSES",
+        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=800&auto=format&fit=crop",
+        link: "/kirana"
+    },
+    {
+        id: 2,
+        title: "SPICES & MASALA",
+        image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=800&auto=format&fit=crop",
+        link: "/kirana"
+    },
+    {
+        id: 3,
+        title: "DAIRY & FRESH",
+        image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=800&auto=format&fit=crop",
+        link: "/kirana"
+    },
+    {
+        id: 4,
+        title: "OILS & GHEE",
+        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=800&auto=format&fit=crop",
+        link: "/kirana"
+    }
+];
+
+// Mock Data for Kirana Products with Categories
+const PRODUCTS = [
+    { id: 1, category: 'grains', title: "Premium Basmati Rice", price: "₹299", store: "Grocery Hub", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80" },
+    { id: 2, category: 'spices', title: "Organic Turmeric Powder", price: "₹89", store: "Spice Corner", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80" },
+    { id: 3, category: 'dairy', title: "Fresh Cow Milk", price: "₹65", store: "Dairy Fresh", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80" },
+    { id: 4, category: 'grains', title: "Whole Wheat Flour", price: "₹149", store: "Grain Market", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80" },
+    { id: 5, category: 'oils', title: "Sunflower Cooking Oil", price: "₹199", store: "Oil Depot", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80" },
+    { id: 6, category: 'spices', title: "Red Chilli Powder", price: "₹79", store: "Spice Bazaar", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80" },
+    { id: 7, category: 'spices', title: "Sugar Cane Jaggery", price: "₹129", store: "Sweet Store", image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80" },
+    { id: 8, category: 'dairy', title: "Green Tea Leaves", price: "₹159", store: "Tea House", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80" }
+];
+
 export default function KiranaPage() {
+    const [selectedCategory, setSelectedCategory] = useState<'all' | 'grains' | 'spices' | 'dairy' | 'oils'>('all');
+    const [isTransitioning, setIsTransitioning] = useState(false);
+
+    const handleCategoryChange = (cat: any) => {
+        if (cat === selectedCategory) return;
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setSelectedCategory(cat);
+            setIsTransitioning(false);
+        }, 300);
+    };
+
+    const filteredProducts = selectedCategory === 'all'
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === selectedCategory);
+
     return (
-        <div className="min-h-screen bg-white">
-            {/* 1. Hero Section */}
-            <div className="relative w-full bg-[#f8f9fa] border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-6 pt-24 pb-16 md:pt-32 md:pb-24">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-green-600 mb-8 transition-colors"
-                    >
-                        <ArrowLeft className="w-4 h-4" /> Back to Home
-                    </Link>
+        <div className="min-h-screen bg-white mesh-gradient-dynamic">
+            <Navbar />
 
-                    <div className="flex flex-col md:flex-row items-end justify-between gap-8">
-                        <div className="max-w-3xl">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold tracking-wide mb-6 uppercase">
-                                <Zap className="w-3 h-3 fill-current" />
-                                Fresh & Local
-                            </div>
-                            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight leading-[1.1] mb-6">
-                                Kirana Essentials, <br className="hidden md:block" />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">
-                                    Delivered Daily.
-                                </span>
-                            </h1>
-                            <p className="text-lg text-gray-600 max-w-xl leading-relaxed">
-                                Get fresh groceries and daily essentials from trusted local kirana stores.
-                                Quality products from your neighborhood, delivered to your doorstep.
-                            </p>
-                        </div>
-
-                        {/* AI Generator Teaser */}
-                        <div className="hidden md:flex flex-col items-end text-right">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg shadow-green-200 mb-4 animate-bounce-slow">
-                                <Sparkles className="w-8 h-8 text-white" />
-                            </div>
-                            <span className="text-sm font-semibold text-gray-900">Smart Shopping</span>
-                            <span className="text-xs text-gray-500">Curated for you</span>
-                        </div>
+            {/* 1. Hero Slider - Grocery Specific */}
+            <div className="relative group">
+                <HeroSlider slides={KIRANA_SLIDES} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none text-center hidden md:block">
+                    <div className="animate-float">
+                        <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.5em] mb-4 block drop-shadow-2xl">Daily Fresh 2026</span>
+                        <h1 className="text-8xl font-black text-white tracking-[1vw] uppercase opacity-20 group-hover:opacity-40 transition-opacity duration-1000">KIRANA</h1>
                     </div>
                 </div>
             </div>
 
-            {/* 2. Filter Bar */}
-            <FilterBar />
+            {/* 2. Popular Categories - Grocery Specific */}
+            <div className="animate-fade-in-up animation-delay-300">
+                <HomeCategoryGrid categories={KIRANA_CATEGORIES} title="Daily Essentials" />
+            </div>
 
-            {/* 3. Product Grid */}
-            <main className="max-w-7xl mx-auto px-6 pb-24 animate-fade-in-up animation-delay-200">
-                <h2 className="sr-only">Kirana Products</h2>
+            {/* 3. Products with Dynamic Selector */}
+            <section className="py-32 px-6 max-w-[1440px] mx-auto">
+                <div className="flex flex-col items-center text-center mb-24 gap-10">
+                    <div className="max-w-3xl animate-fade-in-up">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 rounded-full mb-6 ring-1 ring-green-100">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-[9px] font-black text-green-700 uppercase tracking-widest">In Stock Now</span>
+                        </div>
+                        <h2 className="text-5xl md:text-8xl font-black text-gray-950 tracking-[-0.04em] leading-[0.9] mb-8 italic uppercase">
+                            The <br className="md:hidden" /> Pantry
+                        </h2>
+                        <p className="text-gray-400 font-medium leading-relaxed max-w-xl mx-auto text-lg">
+                            Curated essentials from your neighborhood's most trusted vendors. Quality you can taste, delivered with care.
+                        </p>
+                    </div>
 
-                {/* Grid Layout: 2 cols mobile, 3 tablet, 4 desktop */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16">
-                    {PRODUCTS.map((product) => (
-                        <ClothingCard
-                            key={product.id}
-                            id={product.id}
-                            image={product.image}
-                            title={product.title}
-                            price={product.price}
-                            store={product.store}
-                        />
+                    {/* Category Selector */}
+                    <div className="relative flex flex-wrap justify-center items-center p-2 bg-gray-50 rounded-[40px] shadow-2xl shadow-gray-200/50 ring-1 ring-gray-100 animate-fade-in-up animation-delay-200">
+                        {['all', 'grains', 'spices', 'dairy', 'oils'].map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => handleCategoryChange(cat)}
+                                className={`relative z-10 px-8 py-4 rounded-[32px] text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-500 btn-magnetic ${selectedCategory === cat
+                                    ? "text-black"
+                                    : "text-gray-400 hover:text-gray-600"
+                                    }`}
+                            >
+                                {cat}
+                                {selectedCategory === cat && (
+                                    <div className="absolute inset-0 bg-white rounded-[32px] shadow-xl shadow-gray-200/80 -z-10 animate-scale-in" />
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Product Grid */}
+                <div
+                    className={`grid grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-20 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4 scale-95 blur-sm' : 'opacity-100 translate-y-0 scale-100 blur-0'
+                        }`}
+                >
+                    {filteredProducts.map((item, idx) => (
+                        <div
+                            key={item.id}
+                            className="animate-fade-in-up"
+                            style={{ animationDelay: `${idx * 150}ms` }}
+                        >
+                            <ClothingCard
+                                id={item.id}
+                                title={item.title}
+                                price={item.price}
+                                store={item.store}
+                                image={item.image}
+                            />
+                        </div>
                     ))}
                 </div>
 
-                {/* Load More Trigger */}
-                <div className="mt-20 flex justify-center">
-                    <button className="px-8 py-4 bg-gray-900 text-white rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1/2 transition-all duration-300">
-                        Load More Items
-                    </button>
-                </div>
-            </main>
+                {filteredProducts.length === 0 && !isTransitioning && (
+                    <div className="py-32 text-center animate-fade-in-up">
+                        <div className="text-6xl mb-6 opacity-20">∅</div>
+                        <p className="text-gray-400 font-medium uppercase tracking-widest text-xs">No items found in this category</p>
+                    </div>
+                )}
+            </section>
         </div>
     );
 }
