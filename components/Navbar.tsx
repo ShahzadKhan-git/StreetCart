@@ -42,7 +42,6 @@ export default function Navbar() {
                 <div className="hidden lg:flex items-center gap-6 text-[11px] xl:text-[13px] font-bold uppercase tracking-widest text-gray-500">
                     <Link href="/" className={`hover:text-black transition-colors ${pathname === '/' ? 'text-green-700' : ''}`}>Main</Link>
                     <Link href="/kirana" className={`hover:text-black transition-colors ${pathname === '/kirana' ? 'text-green-700' : ''}`}>Kirana</Link>
-                    <Link href="/clothing" className={`hover:text-black transition-colors ${pathname === '/clothing' ? 'text-green-700' : ''}`}>Clothing</Link>
                     <Link href="/fashion" className={`hover:text-black transition-colors ${pathname === '/fashion' ? 'text-green-700' : ''}`}>Fashion</Link>
                 </div>
 
@@ -132,10 +131,6 @@ export default function Navbar() {
                                 <Link href="/kirana" className="text-lg font-bold text-gray-900 flex items-center justify-between">
                                     Kirana Stores
                                     <span className={`w-2 h-2 rounded-full bg-green-600 ${pathname === '/kirana' ? 'opacity-100' : 'opacity-0'}`} />
-                                </Link>
-                                <Link href="/clothing" className="text-lg font-bold text-gray-900 flex items-center justify-between">
-                                    Clothing Stores
-                                    <span className={`w-2 h-2 rounded-full bg-green-600 ${pathname === '/clothing' ? 'opacity-100' : 'opacity-0'}`} />
                                 </Link>
                                 <Link href="/fashion" className="text-lg font-bold text-gray-900 flex items-center justify-between">
                                     Fashion Hub
