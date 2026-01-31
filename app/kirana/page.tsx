@@ -97,15 +97,9 @@ export default function KiranaPage() {
         <div className="min-h-screen bg-white mesh-gradient-dynamic">
             <Navbar />
 
-            {/* 1. Hero Slider - Grocery Specific */}
+            {/* 1. Hero Slider */}
             <div className="relative group">
                 <HeroSlider slides={KIRANA_SLIDES} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none text-center hidden md:block">
-                    <div className="animate-float">
-                        <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.5em] mb-4 block drop-shadow-2xl">Daily Fresh 2026</span>
-                        <h1 className="text-8xl font-black text-white tracking-[1vw] uppercase opacity-20 group-hover:opacity-40 transition-opacity duration-1000">KIRANA</h1>
-                    </div>
-                </div>
             </div>
 
             {/* 2. Popular Categories - Grocery Specific */}
