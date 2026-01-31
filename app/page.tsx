@@ -48,7 +48,7 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
           {/* Centered Logo */}
-          <div className="mb-10 relative w-[240px] h-[80px] md:w-[300px] md:h-[100px] transition-all duration-700 hover:scale-105">
+          <div className="mb-10 relative w-[360px] h-[120px] md:w-[600px] md:h-[200px] transition-all duration-700 hover:scale-105">
             <Image
               src="/logo.png"
               alt="StreetCart"
